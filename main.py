@@ -11,6 +11,8 @@ from langchain.llms import Ollama
 import os
 import shutil
 import asyncio
+import uvicorn
+
 
 app = FastAPI(
     title="Mi API de Documentos",
@@ -128,5 +130,4 @@ async def ask_question(request: QuestionRequest):
 
 # Ejecutar el servidor de FastAPI
 if __name__ == "__main__":
-    import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
