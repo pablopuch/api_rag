@@ -43,7 +43,7 @@ Asegúrate de tener Python 3.8+ instalado en tu sistema. También necesitarás u
 5. Ejecutar la API:
 
    ```
-   fastapi dev mian.py
+   fastapi dev main.py
    ```
 
 
