@@ -24,3 +24,4 @@ __pycache__/
 
 uploaded_docs/
 vectordb2/
+.vercel
