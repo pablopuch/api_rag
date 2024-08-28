@@ -1,6 +1,6 @@
 # API de Procesamiento de Documentos con LLMs
 
-## Descripción General
+### Descripción General
 
 Esta API permite subir y procesar documentos PDF para posteriormente realizar consultas sobre su contenido utilizando modelos de lenguaje natural (LLMs). El sistema está diseñado para ser flexible y escalable, permitiendo cambiar los modelos de embeddings y el modelo de lenguaje utilizado para las consultas, además de poder ampliar la funcionalidad para soportar otros tipos de documentos como Word, Excel, etc.
 
@@ -21,16 +21,16 @@ Asegúrate de tener Python 3.8+ instalado en tu sistema. También necesitarás u
 
 2. Crear un entorno virtual:
 
-   ```bash
-    python -m venv env
+   ```
+    py -m venv env
     source env/bin/activate   # En Windows usa: .\env\Scripts\activate
-    ```
+   ```
 
 3. Instalar las dependencias:
 
    ```
     pip install -r requirements.txt
-    ```
+   ```
 
 4. Configurar la variable de entorno API_KEY:
 
@@ -49,37 +49,24 @@ Asegúrate de tener Python 3.8+ instalado en tu sistema. También necesitarás u
 
 # Uso de la API
 
-## Endpoints Disponibles
+### Endpoints Disponibles
 
-1. Subir Documentos:
+```http
+  POST /upload-docs/
+```
 
-    . Endpoint: /upload-docs/
+| Type     | Description                |
+| :------- | :------------------------- |
+| `file` | Permite subir archivos PDF al servidor para ser procesados. Los archivos se guardan en el directorio especificado y el sistema se re-inicializa en segundo plano para cargar y procesar los nuevos documentos. |
 
-    . Método: POST
 
-    . Descripción: Permite subir archivos PDF al servidor para ser procesados. Los archivos se guardan en el directorio especificado y el sistema se re-inicializa en segundo plano para cargar y procesar  los nuevos documentos.
+```http
+  POST /ask-question/
+```
 
-    . Ejemplo de solicitud:
-
-    ```
-    curl -X POST "http://localhost:8000/upload-docs/" -F "files=@archivo1.pdf" -F "files=@archivo2.pdf"
-
-    ```
-
-2. Hacer una Pregunta:
-
-    . Endpoint: /ask-question/
-
-    . Método: POST
-
-    . Descripción: Permite hacer preguntas sobre el contenido de los documentos procesados. La pregunta se resuelve utilizando un modelo de lenguaje natural preconfigurado.
-
-    . Ejemplo de solicitud:
-
-    ```
-    curl -X POST "http://localhost:8000/ask-question/" -H "Content-Type: application/json" -d '{"question": "¿Cuál es el resumen del documento?"}'
-
-    ```
+| Type     | Description                       |
+| :------- | :-------------------------------- |
+| `string` | Permite hacer preguntas sobre el contenido de los documentos procesados. La pregunta se resuelve utilizando un modelo de lenguaje natural preconfigurado. |
 
 # Configuración Avanzada
 
@@ -87,9 +74,9 @@ Asegúrate de tener Python 3.8+ instalado en tu sistema. También necesitarás u
 
 Para cambiar el modelo de lenguaje utilizado (por ejemplo, de llama3.1 a otro modelo disponible), puedes modificar la función configure_llm en el archivo principal (main.py):
 
-```def configure_llm():
+```python
+def configure_llm():
     return Ollama(model="NOMBRE_DEL_MODELO:latest", verbose=True)
-
 ```
 
 Asegúrate de que el modelo esté disponible en la plataforma de Ollama y que tu API Key tenga acceso a dicho modelo.
@@ -98,9 +85,8 @@ Asegúrate de que el modelo esté disponible en la plataforma de Ollama y que tu
 
 Si prefieres usar un modelo diferente para los embeddings (por ejemplo, uno más grande o específico para otro idioma), puedes cambiar la inicialización de HuggingFaceEmbeddings en la configuración global:
 
-```
+```python
 embeddings = HuggingFaceEmbeddings(model_name='NUEVO_MODELO_DE_EMBEDDINGS')
-
 ```
 
 Modelos alternativos podrían incluir sentence-transformers/all-mpnet-base-v2 o cualquier otro disponible en Hugging Face.
@@ -111,13 +97,13 @@ Para añadir soporte a otros tipos de archivos como Word o Excel, necesitarás a
 
 1. Instala la librería necesaria para manejar archivos Word:
 
-```pip install python-docx
-
+```
+pip install python-docx
 ```
 
 2. Modifica la función load_documents_async para incluir soporte a archivos .docx:
 
-```
+```python
 from langchain.document_loaders import PyPDFLoader, DocxLoader
 
 async def load_documents_async(folder_path):
@@ -137,7 +123,6 @@ async def load_documents_async(folder_path):
         all_documents.extend(docs)
     
     return all_documents
-
 ```
 
 Con esta configuración, la API también procesará documentos de Word (.docx). Puedes seguir el mismo enfoque para agregar soporte a otros formatos como Excel, utilizando loaders específicos para cada tipo de archivo.
