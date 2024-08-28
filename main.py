@@ -68,7 +68,7 @@ def load_prompt():
 
 # Configurar el modelo de lenguaje Llama3.1 con Ollama
 def configure_llm():
-    return Ollama(model="llama3.1:latest", verbose=True)
+    return Ollama(model="llama3.1:latest", verbose=True) # configuración del modelo
 
 # Configurar la cadena de preguntas y respuestas con recuperación
 def create_qa_chain(llm, vectorstore, prompt):
