@@ -26,20 +26,30 @@ Asegúrate de tener Python 3.8+ instalado en tu sistema. También necesitarás u
     source env/bin/activate   # En Windows usa: .\env\Scripts\activate
    ```
 
-3. Instalar las dependencias:
+3. Configurar la API Key de LangChain
+
+    El proyecto utiliza la API de LangChain para descargar el prompt. Necesitarás configurar tu API key en el entorno virtual. En tu sistema operativo, puedes establecer variables de entorno de manera manual.
+
+    Configura la API Key como una variable de entorno:
+
+    En Windows:
+
+    ```bash
+    setx API_KEY "tu_api_key_aqui"
+    ```
+    En macOS/Linux:
+
+    ```bash
+    export API_KEY="tu_api_key_aqui"
+    ```
+
+
+4. Instalar las dependencias:
 
    ```
     pip install -r requirements.txt
    ```
-
-4. Configurar la variable de entorno API_KEY:
-
-    Es necesario definir la variable de entorno API_KEY con tu clave personal para acceder al modelo de LLM en Ollama:
-
-   ```
-   pip install -r requirements.txt
-   ```
-
+   
 5. Ejecutar la API:
 
    ```
